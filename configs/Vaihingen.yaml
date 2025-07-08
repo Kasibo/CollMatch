@@ -1,0 +1,55 @@
+# arguments for dataset
+dataset: Vaihingen
+nclass: 5
+crop_size: 256
+data_root: dataset/Vaihingen
+
+# arguments for training
+num_workers: 2
+batch_size: 16
+epochs: 200
+lr: 0.0001   # Adamw:0.0001  SGD:0.001
+lr_multi: 1.0 # Adamw:1.0  SGD:10.0
+criterion:
+  name: CELoss
+  kwargs:
+    ignore_index: 255
+lamda: 1.00
+
+model: ResUNet
+backbone : None
+
+thresh_init: 1.00
+thresh_final: 0.90
+thresh_mask_init: 1.00
+thresh_mask_final: 0.90
+
+# 1-8
+# DynamicDropout
+# DDP:
+#     mode: 'cosine'  # 'power''cosine''fixed'
+#     p_st: 0.10
+#     p_ed: 0.50
+#     p_m: 1.0
+# # BlockMaskGenerator
+# BMG:
+#     fst_p: 0.70
+#     fst_s: 32
+#     sec_p: 0.50
+#     sec_s: 2
+#     obj: 'strong'
+
+# 1-4
+# DynamicDropout
+DDP:
+    mode: 'power'  # 'power''cosine''fixed'
+    p_st: 0.10
+    p_ed: 0.50
+    p_m: 1.0
+# BlockMaskGenerator
+BMG:
+    fst_p: 0.70
+    fst_s: 32
+    sec_p: 0.50
+    sec_s: 2
+    obj: 'weak'

@@ -1,0 +1,60 @@
+# arguments for dataset
+dataset: MER
+nclass: 9
+crop_size: 256
+data_root: dataset/MER
+
+# arguments for training
+batch_size: 16
+epochs: 200
+lr: 0.0001   # Adamw:0.0001  SGD:0.001
+lr_multi: 1.0 # Adamw:1.0  SGD:10.0
+criterion:
+  name: CELoss
+  kwargs:
+    ignore_index: 255
+
+model: ResUNet
+backbone : None
+
+# 1-8
+# thresh_init: 0.95
+# thresh_final: 0.90
+# thresh_mask_init: 0.95
+# thresh_mask_final: 0.90
+# lamda: 1.00
+# num_workers: 4
+# # DynamicDropout
+# DDP:
+#     mode: 'power'  # 'power''cosine''fixed'
+#     p_st: 0.10
+#     p_ed: 0.25
+#     p_m: 1.5
+# # BlockMaskGenerator
+# BMG:
+#     fst_p: 0.50
+#     fst_s: 32
+#     sec_p: 0.30
+#     sec_s: 2
+#     obj: 'weak'
+
+# 1-4
+thresh_init: 1.00
+thresh_final: 0.90
+thresh_mask_init: 1.00
+thresh_mask_final: 0.90
+lamda: 1.00
+num_workers: 2
+# DynamicDropout
+DDP:
+    mode: 'power'  # 'power''cosine''fixed'
+    p_st: 0.10
+    p_ed: 0.50
+    p_m: 1.0
+# BlockMaskGenerator
+BMG:
+    fst_p: 0.70
+    fst_s: 32
+    sec_p: 0.50
+    sec_s: 2
+    obj: 'weak'
